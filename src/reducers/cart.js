@@ -16,32 +16,37 @@ var initialstate=data?data:[];
     }
 const cart=(state=initialstate,action)=>{
     var index;
+    var replaceState;
     switch(action.type){   
         case types.ADD_TO_CART:
-            var {product,quantity}=action;
-            index=findProductInCart(state,product);
+            replaceState=[...state];
+            var {product}=action;
+
+            index=findProductInCart(replaceState,product);
             if(index!==-1){
-                state[index].quantity+=1;
+                replaceState[index].quantity+=1;
             }else{
-                state.push(action);
+                replaceState.push(action);
             }
 
-        localStorage.setItem("Products",JSON.stringify(state));
-            return [...state];
+        localStorage.setItem("Products",JSON.stringify(replaceState));
+            return replaceState;
         case types.DELETE_PRODUCT_TO_CART:
-            index=findProductInCart(state,action.product);
+            replaceState=[...state];
+            index=findProductInCart(replaceState,action.product);
             if(index!==-1){
-                state.splice(index,1);
+                replaceState.splice(index,1);
             }
-            localStorage.setItem("Products",JSON.stringify(state));
-            return [...state];
+            localStorage.setItem("Products",JSON.stringify(replaceState));
+            return replaceState;
         case types.UPDATE_PRODUCT_TO_CART:
-            index=findProductInCart(state,action.product);
+            replaceState=[...state];
+            index=findProductInCart(replaceState,action.product);
             if(index!==-1){
-                state[index].quantity=action.quantity;
+                replaceState[index].quantity=action.quantity;
             }
-            localStorage.setItem("Products",JSON.stringify(state));
-            return [...state];
+            localStorage.setItem("Products",JSON.stringify(replaceState));
+            return replaceState;
         default:
             return [...state];
     }

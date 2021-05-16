@@ -8,8 +8,7 @@ var initialstate=messages.MSG_WELCOME;
 const message=(state=initialstate,action)=>{
     switch(action.type){   
         case types.CHANGE_MESSAGE:
-            state=action.message;
-            return [...state];
+            return[...action.message];
         default:
             return [...state];
     }
